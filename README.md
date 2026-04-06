@@ -1,0 +1,1 @@
+compile: g++ main.cpp -IC:\boost -o rsa.exe
