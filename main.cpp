@@ -27,6 +27,8 @@ int main() {
     BigInt q = generatePrime(512);
 
     BigInt n = p * q;
+    cout << "RSA modulus bits: " << msb(n) + 1 << endl;
+
     BigInt phi = (p - 1) * (q - 1);
     BigInt e = 65537;
     
