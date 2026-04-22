@@ -22,12 +22,14 @@ int main() {
     // step4 - keys
     cout << "Generating p..." << endl;
     BigInt p = generatePrime(512);
+    cout << "p = " << p << endl;
 
     cout << "Generating q..." << endl;
     BigInt q = generatePrime(512);
+    cout << "q = " << q << endl;
 
     BigInt n = p * q;
-    cout << "RSA modulus bits: " << msb(n) + 1 << endl;
+    cout << "RSA key bits: " << msb(n) + 1 << endl;
 
     BigInt phi = (p - 1) * (q - 1);
     BigInt e = 65537;
@@ -44,6 +46,10 @@ int main() {
         BigInt m = step3_textToNumber(originalBlock);
         BigInt c = step5_encode(m, e, n);
         BigInt m2 = step6_decode(c, d, n);
+        cout << "m  = " << m << endl;
+        cout << "c  = " << c << endl;
+        cout << "m2 = " << m2 << endl;
+
         string decodedBlock = numberToText(m2);
 
         cout << "Blok: [" << originalBlock << "] -> ";

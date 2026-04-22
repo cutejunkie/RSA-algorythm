@@ -16,4 +16,8 @@ BigInt step5_encode(BigInt m, BigInt e, BigInt n);
 BigInt step6_decode(BigInt c, BigInt d, BigInt n);
 BigInt calculate_d(BigInt e_val, BigInt phi_val);
 
+BigInt generateRandomBigInt(int bits);
+bool isPrime(BigInt n, int iterations = 20);
+BigInt generatePrime(int bits);
+
 #endif
