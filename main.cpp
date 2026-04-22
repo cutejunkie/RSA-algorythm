@@ -10,10 +10,34 @@ using namespace boost::multiprecision;
 typedef number<cpp_int_backend<1024, 1024, unsigned_magnitude, unchecked, void>> BigInt;
 
 int main() {
-
     // read file - full ASCII
     string text = readFile("input.txt");
     cout << "text: " << text << endl;
 
+    // step4 - keys
+    BigInt p("298834810371436605210040030113074317611");
+    BigInt q("235131813645022530117462002306283236741");
+    BigInt n = p * q;
+    BigInt phi = (p - 1) * (q - 1);
+    BigInt e = 65537;
+    
+    cpp_int x, y;
+    boost::multiprecision::gcdext(x, y, cpp_int(e), cpp_int(phi));
+    BigInt d = (BigInt)(x < 0 ? x + cpp_int(phi) : x);
+
+    // Przetwarzanie
+    for (size_t i = 0; i < text.length(); i += 10) {
+        string originalBlock = text.substr(i, 10);
+        while (originalBlock.length() < 10) originalBlock += " ";
+
+        BigInt m = step3_textToNumber(originalBlock);
+        BigInt c = step5_encode(m, e, n);
+        BigInt m2 = step6_decode(c, d, n);
+        string decodedBlock = numberToText(m2);
+
+        cout << "Blok: [" << originalBlock << "] -> ";
+        if (originalBlock == decodedBlock) cout << "OK" << endl;
+        else cout << "ERROR" << endl;
+    }
     return 0;
 }
