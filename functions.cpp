@@ -62,33 +62,32 @@ BigInt step6_decode(BigInt c, BigInt d, BigInt n) {
 }
 
 // Funkcja obliczająca odwrotność modularną (d) bez użycia gcdext z Boosta
-BigInt calculate_d(BigInt e_val, BigInt phi_val) {
-    cpp_int a = cpp_int(e_val);
-    cpp_int b = cpp_int(phi_val);
-    cpp_int m0 = b;
-    cpp_int y = 0, x = 1;
+BigInt calculate_d(BigInt e, BigInt phi) {
+    cpp_int t = 0;
+    cpp_int newt = 1;
 
-    if (b == 1) return 0;
+    cpp_int r = phi;
+    cpp_int newr = e;
 
-    while (a > 1) {
-        // q to iloraz
-        cpp_int q = a / b;
-        cpp_int t = b;
+    while (newr != 0) {
+        cpp_int q = r / newr;
 
-        // b to reszta z dzielenia, standardowy Euklides
-        b = a % b;
-        a = t;
-        t = y;
+        cpp_int temp = newt;
+        newt = t - q * newt;
+        t = temp;
 
-        // Aktualizacja x i y
-        y = x - q * y;
-        x = t;
+        temp = newr;
+        newr = r - q * newr;
+        r = temp;
     }
 
-    // Upewniamy się, że x jest dodatnie
-    if (x < 0) x += m0;
+    if (r > 1)
+        throw std::runtime_error("e is not invertible");
 
-    return (BigInt)x;
+    if (t < 0)
+        t += phi;
+
+    return BigInt(t);
 }
 
 
