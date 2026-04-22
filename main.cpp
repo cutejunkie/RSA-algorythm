@@ -3,6 +3,13 @@
 #include <boost/multiprecision/cpp_int.hpp>
 #include "./functions.hpp"
 
+#include <boost/multiprecision/cpp_int.hpp>
+#include <boost/multiprecision/integer.hpp> // Tutaj siedzi gcdext i invert
+
+namespace mp = boost::multiprecision;
+
+// Twoja definicja
+typedef mp::number<mp::cpp_int_backend<1024, 1024, mp::unsigned_magnitude, mp::unchecked, void>> BigInt;
 using namespace std;
 using namespace boost::multiprecision;
 
@@ -21,9 +28,11 @@ int main() {
     BigInt phi = (p - 1) * (q - 1);
     BigInt e = 65537;
     
-    cpp_int x, y;
-    boost::multiprecision::gcdext(x, y, cpp_int(e), cpp_int(phi));
-    BigInt d = (BigInt)(x < 0 ? x + cpp_int(phi) : x);
+    BigInt d = oblicz_d_recznie(e, phi);
+
+    // 3. Przypisz wynik do swojego BigInt
+    BigInt d = (BigInt)d_raw;
+
 
     // Przetwarzanie
     for (size_t i = 0; i < text.length(); i += 10) {

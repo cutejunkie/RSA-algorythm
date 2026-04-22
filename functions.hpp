@@ -14,5 +14,6 @@ BigInt step3_textToNumber(std::string block);
 std::string numberToText(BigInt m);
 BigInt step5_encode(BigInt m, BigInt e, BigInt n);
 BigInt step6_decode(BigInt c, BigInt d, BigInt n);
+BigInt oblicz_d_recznie(BigInt e_val, BigInt phi_val);
 
 #endif
