@@ -11,13 +11,9 @@ typedef number<cpp_int_backend<1024, 1024, unsigned_magnitude, unchecked, void>>
 
 int main() {
 
+    // read file - full ASCII
     string text = readFile("input.txt");
-    cout << text;
-
-    if (text.length() == 0) {
-        cout << "BLAD: Nic nie wczytano!" << endl;
-        return 1;
-    }
+    cout << "text: " << text << endl;
 
     return 0;
 }
