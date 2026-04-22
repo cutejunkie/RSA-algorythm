@@ -8,13 +8,11 @@
 
 namespace mp = boost::multiprecision;
 
-// Twoja definicja
-typedef mp::number<mp::cpp_int_backend<1024, 1024, mp::unsigned_magnitude, mp::unchecked, void>> BigInt;
-using namespace std;
 using namespace boost::multiprecision;
+using namespace std;
 
 // shortcut for veeery big number (1024 bits)
-typedef number<cpp_int_backend<1024, 1024, unsigned_magnitude, unchecked, void>> BigInt;
+typedef mp::number<mp::cpp_int_backend<1024, 1024, mp::unsigned_magnitude, mp::unchecked, void>> BigInt;
 
 int main() {
     // read file - full ASCII
@@ -22,8 +20,12 @@ int main() {
     cout << "text: " << text << endl;
 
     // step4 - keys
-    BigInt p("298834810371436605210040030113074317611");
-    BigInt q("235131813645022530117462002306283236741");
+    cout << "Generating p..." << endl;
+    BigInt p = generatePrime(512);
+
+    cout << "Generating q..." << endl;
+    BigInt q = generatePrime(512);
+
     BigInt n = p * q;
     BigInt phi = (p - 1) * (q - 1);
     BigInt e = 65537;
