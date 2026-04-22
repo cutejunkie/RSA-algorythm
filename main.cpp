@@ -28,10 +28,8 @@ int main() {
     BigInt phi = (p - 1) * (q - 1);
     BigInt e = 65537;
     
-    BigInt d = oblicz_d_recznie(e, phi);
-
-    // 3. Przypisz wynik do swojego BigInt
-    BigInt d = (BigInt)d_raw;
+    // 3 result to bigint
+    BigInt d = calculate_d(e, phi);
 
 
     // Przetwarzanie

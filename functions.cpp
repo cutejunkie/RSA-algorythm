@@ -61,7 +61,7 @@ BigInt step6_decode(BigInt c, BigInt d, BigInt n) {
 }
 
 // Funkcja obliczająca odwrotność modularną (d) bez użycia gcdext z Boosta
-BigInt oblicz_d_recznie(BigInt e_val, BigInt phi_val) {
+BigInt calculate_d(BigInt e_val, BigInt phi_val) {
     cpp_int a = cpp_int(e_val);
     cpp_int b = cpp_int(phi_val);
     cpp_int m0 = b;
