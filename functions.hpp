@@ -20,4 +20,6 @@ BigInt generateRandomBigInt(int bits);
 bool isPrime(BigInt n, int iterations = 20);
 BigInt generatePrime(int bits);
 
+bool factorize(BigInt n, BigInt &p, BigInt &q, long long &iterations);
+
 #endif

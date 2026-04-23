@@ -162,3 +162,26 @@ BigInt generatePrime(int bits) {
             return candidate;
     }
 }
+
+
+bool factorize(BigInt n, BigInt &p, BigInt &q, long long &iterations) {
+    iterations = 0;
+
+    if (n % 2 == 0) {
+        p = 2;
+        q = n / 2;
+        return true;
+    }
+
+    for (BigInt i = 3; i * i <= n; i += 2) {
+        iterations++;
+
+        if (n % i == 0) {
+            p = i;
+            q = n / i;
+            return true;
+        }
+    }
+
+    return false;
+}

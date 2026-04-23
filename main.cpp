@@ -3,9 +3,6 @@
 #include <boost/multiprecision/cpp_int.hpp>
 #include "./functions.hpp"
 
-#include <boost/multiprecision/cpp_int.hpp>
-#include <boost/multiprecision/integer.hpp> // Tutaj siedzi gcdext i invert
-
 namespace mp = boost::multiprecision;
 
 using namespace boost::multiprecision;
