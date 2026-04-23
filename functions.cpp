@@ -94,14 +94,32 @@ BigInt calculate_d(BigInt e, BigInt phi) {
 
 
 BigInt generateRandomBigInt(int bits) {
+
     std::random_device rd;
     std::mt19937_64 gen(rd());
 
     BigInt result = 0;
 
-    for (int i = 0; i < bits; i += 64) {
+    int fullChunks = bits / 64;
+    int remainingBits = bits % 64;
+
+    // pełne 64-bitowe kawałki
+    for (int i = 0; i < fullChunks; i++) {
+
         result <<= 64;
-        result += gen();
+        result += static_cast<uint64_t>(gen());
+    }
+
+    // reszta bitów
+    if (remainingBits > 0) {
+
+        uint64_t part = gen();
+
+        // maska np. dla 5 bitów -> 00011111
+        part &= ((1ULL << remainingBits) - 1);
+
+        result <<= remainingBits;
+        result += part;
     }
 
     // ustaw najwyższy bit
@@ -114,8 +132,15 @@ BigInt generateRandomBigInt(int bits) {
 }
 
 bool isPrime(BigInt n, int iterations) {
-    if (n < 2) return false;
-    if (n % 2 == 0) return n == 2;
+
+    if (n < 2)
+        return false;
+
+    if (n == 2 || n == 3)
+        return true;
+
+    if (n % 2 == 0)
+        return false;
 
     BigInt d = n - 1;
     int s = 0;
@@ -129,9 +154,12 @@ bool isPrime(BigInt n, int iterations) {
     std::mt19937_64 gen(rd());
 
     for (int i = 0; i < iterations; i++) {
-        BigInt a = 2 + gen() % (n - 3);
 
-        BigInt x = powm(a, d, n);
+        BigInt a =
+            2 + (BigInt(gen()) % (n - 3));
+
+        BigInt x =
+            powm(a, d, n);
 
         if (x == 1 || x == n - 1)
             continue;
@@ -139,6 +167,7 @@ bool isPrime(BigInt n, int iterations) {
         bool passed = false;
 
         for (int r = 1; r < s; r++) {
+
             x = powm(x, 2, n);
 
             if (x == n - 1) {
@@ -154,8 +183,11 @@ bool isPrime(BigInt n, int iterations) {
     return true;
 }
 
+
 BigInt generatePrime(int bits) {
+
     while (true) {
+
         BigInt candidate = generateRandomBigInt(bits);
 
         if (isPrime(candidate))
@@ -163,22 +195,38 @@ BigInt generatePrime(int bits) {
     }
 }
 
+bool factorize(
+    BigInt n,
+    BigInt &p,
+    BigInt &q,
+    long long &iterations
+) {
 
-bool factorize(BigInt n, BigInt &p, BigInt &q, long long &iterations) {
     iterations = 0;
 
+    // sprawdzenie 2
     if (n % 2 == 0) {
+
         p = 2;
         q = n / 2;
+
         return true;
     }
 
-    for (BigInt i = 3; i * i <= n; i += 2) {
+    // brute force
+    for (
+        BigInt i = 3;
+        i * i <= n;
+        i += 2
+    ) {
+
         iterations++;
 
         if (n % i == 0) {
+
             p = i;
             q = n / i;
+
             return true;
         }
     }
